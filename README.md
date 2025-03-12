@@ -1,37 +1,123 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<p align='center'>
+  <a href='https://unico.io'>
+    <img width='350' src='https://unico.io/wp-content/uploads/2024/05/idcloud-horizontal-color.svg'></img>
+  </a>
+</p>
 
-## Getting Started
+<h1 align='center'>SDK Unico</h1>
 
-First, run the development server:
+<div align='center'>
+  
+  ### POC de implementação do SDK CBU em NextsJS
+  
+  <img width='250' src='https://cdn.worldvectorlogo.com/logos/nextjs-13.svg'></img>
+</div>
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 💻 Compatibilidade
+
+
+### Dispositivos compatíveis
+
+- Você pode conferior os aparelhos testados em nossos laboratórios <a href='https://devcenter.unico.io/idcloud/integracao/integracao-by-unico/visao-geral#dispositivos-compativeis'>nesta</a> lista de dispositivos.
+
+
+## ✨ Como começar
+
+Para utilizar o by Unico por meio do SDK do by Unico, o primeiro passo é cadastrar os domínios que serão utilizados como host para exibir o iFrame da jornada do usuário no by Unico.
+
+Sinalize o responsável pelo seu projeto de integração ou o time de suporte da Unico para realizar essa configuração.
+
+Para começar a usar o SDK, é necessário realizar a instalação do SDK Web da Unico. Vale destacar que o "by Unico" utiliza o mesmo SDK empregado no IDPay.:
+```javascript
+$ npm install idpay-b2b-sdk ou no caso dessa POC apenas o npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Para conseguir executa-la é necessario ter uma conta de servico na Unico e um ambiente de testes cadastrado pelo seu gerente de projetos para que voce consiga criar um processo, após isso ao criar um processo voce irá recebe um ID de processo e um Token no response.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+Com essas informacoes voce deve passar dentro dos métodos Init e Open conforme abaixo e depois executar o npm start para iniciar a POC.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Feito isso deve clicar no botao de Init para iniciar a autenticacao e depois no Open para abrir o processo e inciar o fluxo By Unico.
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+## ✨ Metodos disponiveis
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+init(options)
+Esse método inicializa o SDK, fazendo um pré-carregamento de assets, criando a experiência mais fluida para o usuário final. Nesse momento é preciso enviar o token recebido como resultado do CreateProcess.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+<strong>Parâmetros:</strong>
 
-## Deploy on Vercel
+options - é um objeto com as seguintes propriedades de configuração:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+<strong>type</strong>
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# unico-cbu-poc-next
+### O tipo de fluxo que será inicializado. No by Unico utilizamos a opção "IFRAME".
+
+<strong>token</strong>
+
+### Recebe o token do processo criado. Esse token é importante para conseguirmos autenticar a jornada e garantir que somente domínios autorizados utilizem-na (pode ser obtido na criação do processo via API).
+
+```javascript
+import { UnicoSDK } from “idpay-b2b-sdk”;
+
+UnicoSDK.init({
+  env: 'uat'// Só irá ser preenchido se for ambiente de testes.
+  token,
+});
+```
+
+---
+
+<strong>open(options)</strong>
+### Esse método realiza a abertura da experiência do by Unico. Para o fluxo do tipo IFRAME, essa função exibe o iframe já pré-carregado, e inicia o fluxo de mensageria entre a página do cliente e a experiência do by Unico.
+
+## Parâmetros:
+
+<strong>options</strong> - é um objeto com propriedades de configuração:
+
+<strong>processId</strong>
+
+### Recebe o ID do processo criado. Esse ID é importante para conseguirmos obter os detalhes do processo e realizarmos todo o fluxo da maneira correta (pode ser obtido na criação do processo via API).
+
+<strong>token</strong>
+
+### Recebe o token do processo criado. Esse token é importante para conseguirmos autenticar a jornada e garantir que somente domínios autorizados utilizem-na (pode ser obtido na criação do processo via API).
+
+<strong>onFinish(process)</strong>
+
+### Recebe uma função de callback que será executada no término da jornada do by Unico, passando como argumento o objeto do processo com os seguintes dados: { captureConcluded, concluded, id }
+
+```javascript
+const processId = '9bc22bac-1e64-49a5-94d6-9e4f8ec9a1bf';
+```
+
+```javascript
+const process = {
+  id: '9bc22bac-1e64-49a5-94d6-9e4f8ec9a1bf',
+  concluded: true,
+  captureConcluded: true
+};
+```
+
+```javascript
+const onFinishCallback = process => {
+  console.log('Process', process);
+}
+```
+
+```javascript
+UnicoSDK.open({
+  transactionId: processId,
+  token: token,
+  onFinish: onFinishCallback
+});
+```
+```javascript
+UnicoSDK.close();
+```
+
+---
+
+## ✨ Link da nossa documentacao: 
+
+https://devcenter.unico.io/idcloud/integracao/integracao-by-unico/controlando-a-experiencia/sdk#como-comecar
+
