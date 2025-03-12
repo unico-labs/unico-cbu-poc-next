@@ -5,7 +5,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    --background: #0ac5b2;
     --foreground: #ededed;
   }
 }
@@ -38,5 +38,86 @@ a {
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
+  }
+}
+
+.container {
+  text-align: center;
+  padding-top: 40px;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.logo {
+  height: 100px;
+  max-width: 100%;
+  padding: 10px;
+}
+
+.botoes {
+  margin-top: 20px;
+  display: flex; 
+  flex-wrap: wrap; 
+  justify-content: center; 
+  gap: 15px; 
+}
+
+button {
+  padding: 12px 24px;
+  font-size: 18px;
+  cursor: pointer;
+  border-radius: 8px;
+  border: none;
+  background-color: #0070f3; 
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0051a3; 
+}
+
+.iframe-container {
+  max-width: none;
+  height: 70vh; 
+  min-height: 400px;
+  background-color: #e0e0e0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 30px auto;
+  left: -100px;
+}
+
+@media (max-width: 768px) {
+  .iframe-container {
+    width: 100%;
+    left: 0;
+    height: 50vh;
+  }
+
+  button {
+    font-size: 16px;
+    padding: 10px 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .iframe-container {
+    height: 40vh;
+    min-height: 250px;
+  }
+
+  .logo {
+    height: 80px;
+  }
+
+  button {
+    width: 100%;
+    padding: 12px;
   }
 }
