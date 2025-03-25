@@ -1,8 +1,7 @@
 {
   "compilerOptions": {
     "paths": {
-      "@/*": ["./src/*"],
-      "idpay-b2b-sdk": ["./node_modules/idpay-b2b-sdk/index.js"]
+      "@/*": ["./src/*"]
     }
   }
 }

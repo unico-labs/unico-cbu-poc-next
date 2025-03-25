@@ -1,12 +1,10 @@
 "use client"
- import { UnicoSDK } from 'idpay-b2b-sdk/index.js'
+ import { UnicoSDK } from 'idpay-b2b-sdk/index.esm'
 
 export default function Home() {
 
   const token = ""; // Inserir o token do response do processo
   const processId = ""; // Inserir o ProcessID do processo
-
-  const UnicoSDK = window.UnicoSDK.UnicoSDK;
 
   const Init = () => {
     UnicoSDK.init({
