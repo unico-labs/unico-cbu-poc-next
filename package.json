@@ -5,11 +5,11 @@
   "scripts": {
     "dev": "next dev -p 4200",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 4200",
     "lint": "next lint"
   },
   "dependencies": {
-    "idpay-b2b-sdk": "^2.0.3",
+    "idpay-b2b-sdk": "2.1.0",
     "next": "^15.2.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
