@@ -1,36 +1,32 @@
-"use client"
- import { UnicoSDK } from 'idpay-b2b-sdk/index.esm'
+"use client";
+import { ByUnicoSDK } from "idpay-b2b-sdk";
 
 export default function Home() {
-
   const token = ""; // Inserir o token do response do processo
   const processId = ""; // Inserir o ProcessID do processo
 
   const Init = () => {
-    UnicoSDK.init({
-      env: 'uat', // Só irá ser preenchido se for ambiente de testes.
+    ByUnicoSDK.init({
+      env: "uat", // Só irá ser preenchido se for ambiente de testes.
       token,
     });
   };
 
   const Open = () => {
-    UnicoSDK.open({
+    ByUnicoSDK.open({
       transactionId: processId,
       token: token,
-      onFinish: onFinishCallback
+      onFinish: onFinishCallback,
     });
   };
 
-  const onFinishCallback = process => {
-    console.log('Process', process);
-  }
-
-  const Close = () => {
-
-    UnicoSDK.close();
-
+  const onFinishCallback = (process) => {
+    console.log("Process", process);
   };
 
+  const Close = () => {
+    ByUnicoSDK.close();
+  };
 
   return (
     <main className="container">
@@ -42,9 +38,8 @@ export default function Home() {
         <button onClick={Close}>Close</button>
       </div>
       <div id="master-div" className="iframe-container">
-      <div id="unico_iframe_embedded"></div>
-     </div>
-
+        <div id="unico_iframe_embedded"></div>
+      </div>
     </main>
   );
 }
