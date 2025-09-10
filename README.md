@@ -1,123 +1,70 @@
-<p align='center'>
-  <a href='https://unico.io'>
-    <img width='350' src='https://unico.io/wp-content/uploads/2024/05/idcloud-horizontal-color.svg'></img>
-  </a>
+<p align="center">
+  <img src="src/app/assets/logo-home.svg" alt="Unico Logo" width="300"/>
 </p>
 
-<h1 align='center'>SDK Unico</h1>
+# Unico SDK - Next.js PoC
 
-<div align='center'>
-  
-  ### POC de implementação do SDK CBU em NextsJS
-  
-  <img width='250' src='https://cdn.worldvectorlogo.com/logos/nextjs-13.svg'></img>
-</div>
+A comprehensive proof of concept demonstrating the Unico SDK integration with multiple testing modes in Next.js.
 
-## 💻 Compatibilidade
+## 🚀 Quick Start
 
-
-### Dispositivos compatíveis
-
-- Você pode conferior os aparelhos testados em nossos laboratórios <a href='https://devcenter.unico.io/idcloud/integracao/integracao-by-unico/visao-geral#dispositivos-compativeis'>nesta</a> lista de dispositivos.
-
-
-## ✨ Como começar
-
-Para utilizar o by Unico por meio do SDK do by Unico, o primeiro passo é cadastrar os domínios que serão utilizados como host para exibir o iFrame da jornada do usuário no by Unico.
-
-Sinalize o responsável pelo seu projeto de integração ou o time de suporte da Unico para realizar essa configuração.
-
-Para começar a usar o SDK, é necessário realizar a instalação do SDK Web da Unico. Vale destacar que o "by Unico" utiliza o mesmo SDK empregado no IDPay.:
-```javascript
-$ npm install idpay-b2b-sdk ou no caso dessa POC apenas o npm install
+```bash
+npm install
+npm run dev
 ```
 
-Para conseguir executa-la é necessario ter uma conta de servico na Unico e um ambiente de testes cadastrado pelo seu gerente de projetos para que voce consiga criar um processo, após isso ao criar um processo voce irá recebe um ID de processo e um Token no response.
+The application will be available at `http://localhost:4200`
 
-Com essas informacoes voce deve passar dentro dos métodos Init e Open conforme abaixo e depois executar o npm start para iniciar a POC.
+## 📱 Testing Modes
 
-Feito isso deve clicar no botao de Init para iniciar a autenticacao e depois no Open para abrir o processo e inciar o fluxo By Unico.
+The application provides **4 different testing modes** to explore the Unico SDK integration:
 
+### 🏠 Home Screen
+- Main navigation interface
+- Select between different testing modes
+- Access to official documentation
 
-## ✨ Metodos disponiveis
+### 🪟 Modal Test
+- SDK displayed in an overlay modal
+- Clean modal interface with backdrop blur
+- Automatic closure when flow completes
 
-init(options)
-Esse método inicializa o SDK, fazendo um pré-carregamento de assets, criando a experiência mais fluida para o usuário final. Nesse momento é preciso enviar o token recebido como resultado do CreateProcess.
+### 🖼️ Iframe Box Test  
+- SDK embedded directly in a container on the page
+- Manual controls: Initialize, Open, and Close
+- Fixed container with proper dimensions
 
-<strong>Parâmetros:</strong>
+### 📺 Fullscreen Test
+- SDK taking up the entire browser screen
+- Immersive fullscreen experience
+- Automatic return when flow finishes
 
-options - é um objeto com as seguintes propriedades de configuração:
+## 🔧 How to Use
 
-<strong>type</strong>
+1. **Get your credentials**: You need a **Token** and **Transaction ID** from your Unico service account
+2. **Choose a testing mode**: Navigate from the home screen to your preferred test mode
+3. **Fill the required fields**: Enter your Token and Transaction ID
+4. **Initialize the SDK**: Click "Initialize SDK" (if available)
+5. **Start the flow**: Click the respective "Open" button to begin the Unico flow
 
-### O tipo de fluxo que será inicializado. No by Unico utilizamos a opção "IFRAME".
+## 📚 Requirements
 
-<strong>token</strong>
+- Node.js 18+
+- Valid Unico service account
+- Authorized domain for iframe integration
 
-### Recebe o token do processo criado. Esse token é importante para conseguirmos autenticar a jornada e garantir que somente domínios autorizados utilizem-na (pode ser obtido na criação do processo via API).
+## 🎯 Features
 
-```javascript
-import { ByUnicoSDK } from “idpay-b2b-sdk”;
+- ✅ **Next.js 15** with App Router
+- ✅ **Responsive Design** (Mobile, Tablet, Desktop)
+- ✅ **Dynamic SDK Loading** for optimal performance
+- ✅ **Modern UI** with Unico branding
+- ✅ **Multiple Integration Modes**
 
-ByUnicoSDK.init({
-  env: 'uat'// Só irá ser preenchido se for ambiente de testes.
-  token,
-});
-```
+## 📖 Documentation
+
+For detailed SDK implementation guide, visit: [Unico Developer Center](https://devcenter.unico.io/idcloud/integracao/integracao-by-unico/controlando-a-experiencia/sdk#como-comecar)
 
 ---
 
-<strong>open(options)</strong>
-### Esse método realiza a abertura da experiência do by Unico. Para o fluxo do tipo IFRAME, essa função exibe o iframe já pré-carregado, e inicia o fluxo de mensageria entre a página do cliente e a experiência do by Unico.
-
-## Parâmetros:
-
-<strong>options</strong> - é um objeto com propriedades de configuração:
-
-<strong>processId</strong>
-
-### Recebe o ID do processo criado. Esse ID é importante para conseguirmos obter os detalhes do processo e realizarmos todo o fluxo da maneira correta (pode ser obtido na criação do processo via API).
-
-<strong>token</strong>
-
-### Recebe o token do processo criado. Esse token é importante para conseguirmos autenticar a jornada e garantir que somente domínios autorizados utilizem-na (pode ser obtido na criação do processo via API).
-
-<strong>onFinish(process)</strong>
-
-### Recebe uma função de callback que será executada no término da jornada do by Unico, passando como argumento o objeto do processo com os seguintes dados: { captureConcluded, concluded, id }
-
-```javascript
-const processId = '9bc22bac-1e64-49a5-94d6-9e4f8ec9a1bf';
-```
-
-```javascript
-const process = {
-  id: '9bc22bac-1e64-49a5-94d6-9e4f8ec9a1bf',
-  concluded: true,
-  captureConcluded: true
-};
-```
-
-```javascript
-const onFinishCallback = process => {
-  console.log('Process', process);
-}
-```
-
-```javascript
-ByUnicoSDK.open({
-  transactionId: processId,
-  token: token,
-  onFinish: onFinishCallback
-});
-```
-```javascript
-ByUnicoSDK.close();
-```
-
----
-
-## ✨ Link da nossa documentacao: 
-
-https://devcenter.unico.io/idcloud/integracao/integracao-by-unico/controlando-a-experiencia/sdk#como-comecar
-
+**SDK Version**: 2.1.2 | **Next.js Version**: 15.3.3
